@@ -1,0 +1,108 @@
+<div class="min-h-screen bg-[#F4F5F7] flex flex-col justify-center items-center p-4 py-8">
+  <div class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden p-8 border border-gray-100">
+    
+    <div class="flex justify-center mb-6">
+      <app-logo></app-logo>
+    </div>
+
+    <!-- Toggle Role -->
+    <div class="flex justify-center mb-6">
+      <div class="bg-gray-100 p-1.5 rounded-full inline-flex gap-1 border border-gray-200">
+        <button 
+          type="button"
+          (click)="selectRole('CUSTOMER')" 
+          [class.bg-[#F5C518]]="selectedRole === 'CUSTOMER'"
+          [class.text-[#1A1A1A]]="selectedRole === 'CUSTOMER'"
+          [class.font-bold]="selectedRole === 'CUSTOMER'"
+          class="px-6 py-2 rounded-full text-xs transition-all duration-200 text-gray-500">
+          Compte Client
+        </button>
+        <button 
+          type="button"
+          (click)="selectRole('DRIVER')" 
+          [class.bg-[#F5C518]]="selectedRole === 'DRIVER'"
+          [class.text-[#1A1A1A]]="selectedRole === 'DRIVER'"
+          [class.font-bold]="selectedRole === 'DRIVER'"
+          class="px-6 py-2 rounded-full text-xs transition-all duration-200 text-gray-500">
+          Devenir Chauffeur
+        </button>
+      </div>
+    </div>
+
+    <div class="text-center mb-6">
+      <h1 class="text-xl font-black text-gray-900">
+        {{ selectedRole === 'CUSTOMER' ? 'Créer un compte client' : 'Inscription Chauffeur Pro' }}
+      </h1>
+      <p class="text-xs text-gray-500 mt-1">Rejoignez le réseau MotoTaxi Tunisie</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="mb-4 p-3 bg-red-50 text-red-600 rounded-xl text-xs font-medium border border-red-100">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-3">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Prénom</label>
+          <input type="text" formControlName="firstName" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F5C518]">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nom</label>
+          <input type="text" formControlName="lastName" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F5C518]">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email</label>
+        <input type="email" formControlName="email" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F5C518]">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Téléphone</label>
+        <input type="text" formControlName="phone" placeholder="+216 00 000 000" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F5C518]">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Mot de passe</label>
+        <input type="password" formControlName="password" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F5C518]">
+      </div>
+
+      <!-- Extra fields for Driver -->
+      <div *ngIf="selectedRole === 'DRIVER'" class="pt-2 border-t border-gray-100 space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">N° Permis</label>
+            <input type="text" formControlName="licenseNumber" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Matricule</label>
+            <input type="text" formControlName="vehiclePlate" placeholder="123 TU 4567" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Type de véhicule</label>
+          <select formControlName="vehicleType" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm">
+            <option value="MOTO">Moto Standard</option>
+            <option value="TAXI">Moto-Taxi Grand Confort</option>
+            <option value="EXPRESS">Moto Express / Livraison</option>
+          </select>
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        [disabled]="isLoading || registerForm.invalid"
+        class="w-full bg-[#F5C518] hover:bg-[#E5B50A] text-[#1A1A1A] font-bold py-3.5 px-4 rounded-xl shadow-md transition-all duration-200 flex items-center justify-center gap-2 mt-4 disabled:opacity-50">
+        <i *ngIf="isLoading" class="fa-solid fa-circle-notch fa-spin"></i>
+        <span>{{ isLoading ? 'Création...' : 'Créer mon compte' }}</span>
+      </button>
+    </form>
+
+    <div class="mt-6 text-center text-xs text-gray-500">
+      Déjà inscrit ? 
+      <a routerLink="/auth/login" class="text-gray-900 font-bold hover:underline ml-1">Se connecter</a>
+    </div>
+
+  </div>
+</div>

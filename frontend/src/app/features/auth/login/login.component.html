@@ -1,0 +1,94 @@
+<div class="min-h-screen bg-[#F4F5F7] flex flex-col justify-center items-center p-4">
+  <div class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden p-8 border border-gray-100">
+    
+    <!-- Brand Logo -->
+    <div class="flex justify-center mb-6">
+      <app-logo></app-logo>
+    </div>
+
+    <!-- Role Switcher (matching interface.png style) -->
+    <div class="flex justify-center mb-8">
+      <div class="bg-gray-100 p-1.5 rounded-full inline-flex gap-1 shadow-inner border border-gray-200">
+        <button 
+          type="button"
+          (click)="selectRole('CUSTOMER')" 
+          [class.bg-[#F5C518]]="selectedRole === 'CUSTOMER'"
+          [class.text-[#1A1A1A]]="selectedRole === 'CUSTOMER'"
+          [class.font-bold]="selectedRole === 'CUSTOMER'"
+          class="px-5 py-2 rounded-full text-xs transition-all duration-200 text-gray-500 hover:text-gray-900">
+          Client
+        </button>
+        <button 
+          type="button"
+          (click)="selectRole('DRIVER')" 
+          [class.bg-[#F5C518]]="selectedRole === 'DRIVER'"
+          [class.text-[#1A1A1A]]="selectedRole === 'DRIVER'"
+          [class.font-bold]="selectedRole === 'DRIVER'"
+          class="px-5 py-2 rounded-full text-xs transition-all duration-200 text-gray-500 hover:text-gray-900">
+          Chauffeur
+        </button>
+        <button 
+          type="button"
+          (click)="selectRole('ADMIN')" 
+          [class.bg-[#F5C518]]="selectedRole === 'ADMIN'"
+          [class.text-[#1A1A1A]]="selectedRole === 'ADMIN'"
+          [class.font-bold]="selectedRole === 'ADMIN'"
+          class="px-5 py-2 rounded-full text-xs transition-all duration-200 text-gray-500 hover:text-gray-900">
+          Admin
+        </button>
+      </div>
+    </div>
+
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-black text-gray-900 tracking-tight">Bienvenue</h1>
+      <p class="text-xs text-gray-500 mt-1">Connectez-vous pour continuer</p>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="mb-4 p-3 bg-red-50 text-red-600 rounded-xl text-xs font-medium flex items-center gap-2 border border-red-100">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Email</label>
+        <div class="relative">
+          <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+          <input 
+            type="email" 
+            formControlName="email"
+            placeholder="nom@exemple.com"
+            class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#F5C518] focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Mot de passe</label>
+        <div class="relative">
+          <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+          <input 
+            type="password" 
+            formControlName="password"
+            placeholder="••••••••"
+            class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#F5C518] focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        [disabled]="isLoading || loginForm.invalid"
+        class="w-full bg-[#F5C518] hover:bg-[#E5B50A] text-[#1A1A1A] font-bold py-3.5 px-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-6 disabled:opacity-50">
+        <i *ngIf="isLoading" class="fa-solid fa-circle-notch fa-spin"></i>
+        <span>{{ isLoading ? 'Connexion en cours...' : 'Se connecter' }}</span>
+        <i *ngIf="!isLoading" class="fa-solid fa-arrow-right text-xs"></i>
+      </button>
+    </form>
+
+    <div class="mt-8 text-center text-xs text-gray-500">
+      Pas encore de compte ? 
+      <a routerLink="/auth/register" class="text-gray-900 font-bold hover:underline ml-1">Créer un compte</a>
+    </div>
+
+  </div>
+</div>

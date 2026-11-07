@@ -1,0 +1,10 @@
+com\mototaxi\model\User$UserBuilder.class
+com\mototaxi\model\Ride$RideBuilder.class
+com\mototaxi\model\Driver$DriverBuilder.class
+com\mototaxi\dto\RideResponse$RideResponseBuilder.class
+com\mototaxi\model\Rating$RatingBuilder.class
+com\mototaxi\model\Payment$PaymentBuilder.class
+com\mototaxi\model\Tariff$TariffBuilder.class
+com\mototaxi\dto\PriceEstimateResponse$PriceEstimateResponseBuilder.class
+com\mototaxi\dto\PagedResponse$PagedResponseBuilder.class
+com\mototaxi\dto\AuthResponse$AuthResponseBuilder.class

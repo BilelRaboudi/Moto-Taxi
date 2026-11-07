@@ -1,0 +1,116 @@
+<div class="space-y-4">
+
+  <!-- Big Yellow Gains Card (exact match of interface.png) -->
+  <div class="bg-[#F5C518] rounded-3xl p-5 shadow-lg relative overflow-hidden text-[#1A1A1A]">
+    <div class="flex items-center gap-2 text-xs font-black uppercase tracking-wider mb-2 opacity-80">
+      <i class="fa-solid fa-dollar-sign text-sm"></i>
+      <span>Gains du jour</span>
+    </div>
+
+    <div class="flex items-baseline gap-2">
+      <span class="text-4xl font-black tracking-tight">{{ todayEarnings | number:'1.1-1' }}</span>
+      <span class="text-base font-extrabold">TND</span>
+    </div>
+
+    <p class="text-[11px] font-bold mt-1 opacity-75">TND</p>
+
+    <!-- Background decorative curved shape -->
+    <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-white/10 rounded-full pointer-events-none"></div>
+  </div>
+
+  <!-- Two Stat Cards Row (Courses 15 / Note 4.9) -->
+  <div class="grid grid-cols-2 gap-3">
+    <!-- Courses Card -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between">
+      <div class="flex items-center gap-2 text-xs font-bold text-gray-500 mb-1">
+        <i class="fa-solid fa-award text-yellow-500"></i>
+        <span>Courses</span>
+      </div>
+      <div>
+        <p class="text-2xl font-black text-gray-900 leading-none">{{ todayRidesCount }}</p>
+        <span class="text-[10px] text-gray-400 font-semibold">Aujourd'hui</span>
+      </div>
+    </div>
+
+    <!-- Rating Card -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between">
+      <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-1">
+        <div class="flex items-center gap-1.5 text-green-600">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <span class="text-gray-500">Note</span>
+        </div>
+      </div>
+      <div>
+        <p class="text-2xl font-black text-gray-900 leading-none">{{ driverRating }}</p>
+        <div class="flex text-[#F5C518] text-[10px] gap-0.5 mt-0.5">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nouvelle demande de course (Card matching interface.png) -->
+  <div *ngIf="hasNewRequest" class="bg-white rounded-3xl p-4 shadow-md border-2 border-yellow-200 relative overflow-hidden transition-all duration-300">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <span class="text-xs font-extrabold text-gray-800 block">Nouvelle demande de course</span>
+        <div class="flex items-center gap-2 mt-1 text-xs font-bold text-gray-900">
+          <span>{{ incomingRequest.origin }}</span>
+          <i class="fa-solid fa-arrow-right text-[10px] text-gray-400"></i>
+          <span>{{ incomingRequest.destination }}</span>
+        </div>
+      </div>
+      
+      <!-- Moto badge graphic -->
+      <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-[#1A1A1A]">
+        <i class="fa-solid fa-motorcycle text-base"></i>
+      </div>
+    </div>
+
+    <!-- Price and Buttons Row -->
+    <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+      <div class="text-base font-black text-gray-900">
+        {{ incomingRequest.price | number:'1.1-1' }} <span class="text-xs font-bold text-gray-500">TND</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button 
+          (click)="ignoreRequest()"
+          class="px-3.5 py-1.5 rounded-full text-xs font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition">
+          Ignorer
+        </button>
+        <button 
+          (click)="acceptRequest()"
+          class="px-4 py-1.5 rounded-full text-xs font-extrabold text-[#1A1A1A] bg-[#F5C518] hover:bg-[#E5B50A] shadow-sm transition active:scale-95">
+          Accepter
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Rides List -->
+  <div class="space-y-2 pt-1">
+    <div *ngFor="let trip of recentTrips" class="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex items-center justify-between text-xs">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1 text-gray-400 font-semibold text-[11px]">
+          <i class="fa-regular fa-clock"></i>
+          <span>{{ trip.time }}</span>
+        </div>
+        <div class="flex items-center gap-1.5 font-bold text-gray-800">
+          <span>{{ trip.origin }}</span>
+          <i class="fa-solid fa-arrow-right text-[10px] text-gray-300"></i>
+          <span>{{ trip.destination }}</span>
+        </div>
+      </div>
+
+      <span class="font-black text-gray-900 bg-gray-50 px-2 py-0.5 rounded-lg border border-gray-200">
+        {{ trip.price | number:'1.1-1' }} TND
+      </span>
+    </div>
+  </div>
+
+</div>

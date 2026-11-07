@@ -1,0 +1,84 @@
+<div class="flex-1 flex flex-col relative h-full">
+
+  <!-- Map Background -->
+  <div class="relative w-full h-[55%] bg-gray-100">
+    <div id="trackingMap" class="w-full h-full"></div>
+
+    <!-- ETA floating pill -->
+    <div class="absolute top-4 left-5 right-5 z-[400] flex justify-between items-center bg-[#1A1A1A] text-white px-4 py-2.5 rounded-2xl shadow-xl">
+      <div class="flex items-center gap-2.5">
+        <div class="w-2.5 h-2.5 rounded-full bg-[#F5C518] animate-ping"></div>
+        <span class="text-xs font-bold">{{ statusText }}</span>
+      </div>
+      <span class="text-xs font-extrabold text-[#F5C518] bg-white/10 px-2.5 py-1 rounded-full">
+        ~ {{ etaMinutes }} min
+      </span>
+    </div>
+
+    <!-- SOS Button -->
+    <div class="absolute bottom-4 right-4 z-[400]">
+      <button 
+        (click)="triggerSOS()"
+        [class.bg-red-700]="sosTriggered"
+        class="bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2 border-2 border-white transition">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>{{ sosTriggered ? 'SOS ENVOYÉ' : 'SOS' }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bottom Driver Card -->
+  <div class="flex-1 bg-white px-6 pt-5 pb-4 rounded-t-3xl -mt-5 z-10 shadow-2xl flex flex-col justify-between">
+    
+    <div>
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-gray-100 border-2 border-[#F5C518] flex items-center justify-center font-bold text-gray-800 text-base">
+            MB
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-gray-900">{{ driverName }}</h3>
+            <p class="text-[11px] text-gray-500">{{ vehicleType }} • <span class="font-bold text-gray-800">{{ vehiclePlate }}</span></p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1 bg-yellow-50 px-2.5 py-1 rounded-full border border-yellow-200">
+          <i class="fa-solid fa-star text-xs text-[#F5C518]"></i>
+          <span class="text-xs font-extrabold text-gray-900">{{ rating }}</span>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <a href="tel:+21698123456" class="flex items-center justify-center gap-2 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-bold text-gray-800 transition">
+          <i class="fa-solid fa-phone text-[#10B981]"></i>
+          <span>Appeler</span>
+        </a>
+        <button class="flex items-center justify-center gap-2 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-bold text-gray-800 transition">
+          <i class="fa-solid fa-comment-dots text-[#F5C518]"></i>
+          <span>Message</span>
+        </button>
+      </div>
+
+      <!-- Route Info -->
+      <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100 space-y-2 text-xs">
+        <div class="flex items-center gap-2 text-gray-600">
+          <i class="fa-solid fa-circle-dot text-xs text-gray-400"></i>
+          <span class="truncate font-medium">El Menzah 6, Tunis</span>
+        </div>
+        <div class="flex items-center gap-2 text-gray-900 font-bold">
+          <i class="fa-solid fa-location-dot text-xs text-[#F5C518]"></i>
+          <span class="truncate">Avenue Habib Bourguiba, Centre Ville</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-2">
+      <a routerLink="/client/home" class="block text-center py-2 text-xs text-red-500 font-bold hover:underline">
+        Annuler la course
+      </a>
+    </div>
+
+  </div>
+
+</div>

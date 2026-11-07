@@ -1,0 +1,131 @@
+<div class="space-y-6">
+
+  <!-- 3 Stat Cards Row (exact replica of interface.png) -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    
+    <!-- 18 Courses Actives -->
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
+      <div>
+        <span class="text-xs font-bold text-gray-400">Courses actives</span>
+        <h3 class="text-3xl font-black text-gray-900 mt-1">{{ stats.activeRides }}</h3>
+      </div>
+      <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl shadow-inner">
+        <i class="fa-solid fa-location-arrow"></i>
+      </div>
+    </div>
+
+    <!-- 142 Chauffeurs en ligne -->
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
+      <div>
+        <span class="text-xs font-bold text-gray-400">Chauffeurs en ligne</span>
+        <h3 class="text-3xl font-black text-gray-900 mt-1">{{ stats.onlineDrivers }}</h3>
+      </div>
+      <div class="w-12 h-12 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center text-xl shadow-inner">
+        <i class="fa-solid fa-users"></i>
+      </div>
+    </div>
+
+    <!-- 2,450 TND Revenu du jour -->
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
+      <div>
+        <span class="text-xs font-bold text-gray-400">Revenu du jour</span>
+        <h3 class="text-3xl font-black text-gray-900 mt-1">{{ stats.revenueToday | number }} <span class="text-sm font-bold text-gray-500">TND</span></h3>
+      </div>
+      <div class="w-12 h-12 rounded-2xl bg-yellow-50 text-[#D4A000] flex items-center justify-center text-xl shadow-inner">
+        <i class="fa-solid fa-dollar-sign"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Table Section: Nouvelles demandes de chauffeurs -->
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    
+    <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+      <div>
+        <h2 class="text-base font-black text-gray-900">Nouvelles demandes de chauffeurs</h2>
+        <p class="text-xs text-gray-400 mt-0.5">Validation des documents et résignation</p>
+      </div>
+
+      <span class="text-xs font-bold bg-yellow-100 text-[#B78A00] px-3 py-1 rounded-full">
+        En attente (3)
+      </span>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-gray-100 text-[11px] font-extrabold uppercase text-gray-400 bg-gray-50/50">
+            <th class="py-3.5 px-6">Chauffeur</th>
+            <th class="py-3.5 px-6">Contact</th>
+            <th class="py-3.5 px-6">Date de demande</th>
+            <th class="py-3.5 px-6 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 text-xs">
+          <tr *ngFor="let driver of pendingDrivers" class="hover:bg-gray-50/70 transition">
+            
+            <!-- Chauffeur Name + Avatar -->
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-bold text-xs border border-gray-200">
+                  <i class="fa-regular fa-user"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-gray-900">{{ driver.name }}</div>
+                  <div class="text-[10px] text-gray-400 flex items-center gap-1">
+                    <span>{{ driver.time }}</span>
+                    <span>•</span>
+                    <span class="text-yellow-600 font-semibold"><i class="fa-solid fa-star text-[9px] text-[#F5C518]"></i> {{ driver.rating }}</span>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <!-- Contact -->
+            <td class="py-4 px-6 font-semibold text-gray-700">
+              {{ driver.phone }}
+            </td>
+
+            <!-- Date -->
+            <td class="py-4 px-6 text-gray-500 font-medium">
+              {{ driver.date }} à {{ driver.time }}
+            </td>
+
+            <!-- Actions Buttons (Permis, Contacter, Refuser) -->
+            <td class="py-4 px-6 text-right">
+              <div *ngIf="driver.status === 'PENDING'" class="flex items-center justify-end gap-2">
+                <!-- Permis badge -->
+                <button class="bg-[#E8F8F0] hover:bg-[#D2F2E2] text-[#10B981] font-bold px-3 py-1.5 rounded-full text-xs transition border border-[#10B981]/20">
+                  Permis
+                </button>
+
+                <!-- Valider (Contacter in mockup) -->
+                <button (click)="validateDriver(driver)" class="bg-[#10B981] hover:bg-[#059669] text-white font-bold px-3.5 py-1.5 rounded-full text-xs transition shadow-sm">
+                  Valider
+                </button>
+
+                <!-- Refuser badge -->
+                <button (click)="refuseDriver(driver)" class="bg-[#FEE2E2] hover:bg-[#FECACA] text-[#EF4444] font-bold px-3 py-1.5 rounded-full text-xs transition border border-[#EF4444]/20">
+                  Refuser
+                </button>
+              </div>
+
+              <div *ngIf="driver.status === 'VALIDATED'" class="text-xs font-bold text-green-600">
+                <i class="fa-solid fa-circle-check mr-1"></i> Validé
+              </div>
+
+              <div *ngIf="driver.status === 'REFUSED'" class="text-xs font-bold text-red-500">
+                <i class="fa-solid fa-circle-xmark mr-1"></i> Refusé
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>
