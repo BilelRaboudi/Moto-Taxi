@@ -1,59 +1,85 @@
-<div class="min-h-screen bg-[#F4F5F7] flex justify-center py-0 md:py-6">
-  <!-- Mobile Container matching interface.png mockup aspect ratio -->
-  <div class="w-full max-w-[420px] bg-white md:rounded-[40px] shadow-2xl overflow-hidden flex flex-col h-[100vh] md:h-[880px] border border-gray-200 relative">
+<div class="min-h-screen bg-[#F4F5F7] flex flex-col">
 
-    <!-- Top App Bar -->
-    <header class="px-5 pt-4 pb-2 bg-white flex items-center justify-between z-10">
-      <button class="w-10 h-10 rounded-full flex items-center justify-center text-gray-700 hover:bg-gray-100">
-        <i class="fa-solid fa-bars text-lg"></i>
-      </button>
-
-      <app-logo></app-logo>
-
-      <button class="w-10 h-10 rounded-full flex items-center justify-center text-gray-700 hover:bg-gray-100">
-        <i class="fa-solid fa-magnifying-glass text-lg"></i>
-      </button>
-    </header>
-
-    <!-- Top Role Navigation Bar (exact match of interface.png) -->
-    <div class="px-5 py-2 bg-white flex justify-start z-10">
-      <div class="bg-gray-100 p-1 rounded-full inline-flex gap-1">
-        <button class="bg-[#F5C518] text-[#1A1A1A] font-bold px-5 py-1.5 rounded-full text-xs shadow-sm">
-          Client
-        </button>
-        <button (click)="switchRole('driver')" class="text-gray-500 font-medium px-4 py-1.5 rounded-full text-xs hover:text-gray-900 transition">
-          Chauffeur
-        </button>
-        <button (click)="switchRole('admin')" class="text-gray-500 font-medium px-4 py-1.5 rounded-full text-xs hover:text-gray-900 transition">
-          Admin
-        </button>
+  <!-- Responsive Top Header -->
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-30 px-4 sm:px-8 py-3.5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- Brand -->
+      <div class="flex items-center gap-3">
+        <app-logo></app-logo>
       </div>
+
+      <!-- Center: Active Space Badge & Quick Links -->
+      <div class="hidden sm:flex items-center gap-2">
+        <span class="bg-yellow-50 text-yellow-800 border border-yellow-200 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+          <i class="fa-solid fa-user text-xs"></i>
+          <span>Espace Client</span>
+        </span>
+      </div>
+
+      <!-- Right: Desktop Navigation & User Profile -->
+      <div class="flex items-center gap-4 sm:gap-6">
+        <nav class="hidden md:flex items-center gap-1 text-xs font-bold text-gray-600">
+          <a routerLink="/client/home" routerLinkActive="bg-[#F5C518]/20 text-[#1A1A1A]" [routerLinkActiveOptions]="{exact: true}" class="px-3.5 py-2 rounded-xl hover:bg-gray-100 transition flex items-center gap-2">
+            <i class="fa-solid fa-compass text-sm text-[#F5C518]"></i>
+            <span>Commander</span>
+          </a>
+          <a routerLink="/client/tracking" routerLinkActive="bg-[#F5C518]/20 text-[#1A1A1A]" class="px-3.5 py-2 rounded-xl hover:bg-gray-100 transition flex items-center gap-2">
+            <i class="fa-solid fa-location-dot text-sm text-[#F5C518]"></i>
+            <span>Suivi direct</span>
+          </a>
+          <a routerLink="/client/history" routerLinkActive="bg-[#F5C518]/20 text-[#1A1A1A]" class="px-3.5 py-2 rounded-xl hover:bg-gray-100 transition flex items-center gap-2">
+            <i class="fa-regular fa-clock text-sm text-[#F5C518]"></i>
+            <span>Historique</span>
+          </a>
+          <a routerLink="/client/profile" routerLinkActive="bg-[#F5C518]/20 text-[#1A1A1A]" class="px-3.5 py-2 rounded-xl hover:bg-gray-100 transition flex items-center gap-2">
+            <i class="fa-regular fa-user text-sm text-[#F5C518]"></i>
+            <span>Profil</span>
+          </a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <div class="text-right hidden sm:block">
+            <p class="text-xs font-bold text-gray-900 leading-tight">{{ authService.currentUser()?.fullName || 'Client MotoTaxi' }}</p>
+            <p class="text-[10px] text-gray-400 font-medium">{{ authService.currentUser()?.phone || 'Grand Tunis' }}</p>
+          </div>
+
+          <button 
+            (click)="logout()" 
+            title="Se déconnecter"
+            class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span class="hidden sm:inline">Déconnexion</span>
+          </button>
+        </div>
+      </div>
+
     </div>
+  </header>
 
-    <!-- Main Content Area with router-outlet -->
-    <main class="flex-1 overflow-y-auto relative flex flex-col">
-      <router-outlet></router-outlet>
-    </main>
+  <!-- Main Content Area -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-0 sm:p-4 md:p-6 pb-20 md:pb-6 flex flex-col">
+    <router-outlet></router-outlet>
+  </main>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="bg-white border-t border-gray-100 px-6 py-3 flex justify-between items-center z-20">
-      <a routerLink="/client/home" routerLinkActive="text-[#F5C518]" [routerLinkActiveOptions]="{exact: true}" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-700 text-xs font-semibold">
-        <i class="fa-solid fa-compass text-lg"></i>
-        <span>Trajet</span>
-      </a>
-      <a routerLink="/client/tracking" routerLinkActive="text-[#F5C518]" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-700 text-xs font-semibold">
-        <i class="fa-solid fa-location-dot text-lg"></i>
-        <span>En direct</span>
-      </a>
-      <a routerLink="/client/history" routerLinkActive="text-[#F5C518]" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-700 text-xs font-semibold">
-        <i class="fa-regular fa-clock text-lg"></i>
-        <span>Historique</span>
-      </a>
-      <a routerLink="/client/profile" routerLinkActive="text-[#F5C518]" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-700 text-xs font-semibold">
-        <i class="fa-regular fa-user text-lg"></i>
-        <span>Profil</span>
-      </a>
-    </nav>
+  <!-- Bottom Navigation Bar (Visible ONLY on Mobile < md) -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-2.5 flex justify-between items-center z-40 shadow-lg">
+    <a routerLink="/client/home" routerLinkActive="text-[#F5C518] font-bold" [routerLinkActiveOptions]="{exact: true}" class="flex flex-col items-center gap-1 text-gray-400 text-[11px] font-semibold">
+      <i class="fa-solid fa-compass text-lg"></i>
+      <span>Commander</span>
+    </a>
+    <a routerLink="/client/tracking" routerLinkActive="text-[#F5C518] font-bold" class="flex flex-col items-center gap-1 text-gray-400 text-[11px] font-semibold">
+      <i class="fa-solid fa-location-dot text-lg"></i>
+      <span>En direct</span>
+    </a>
+    <a routerLink="/client/history" routerLinkActive="text-[#F5C518] font-bold" class="flex flex-col items-center gap-1 text-gray-400 text-[11px] font-semibold">
+      <i class="fa-regular fa-clock text-lg"></i>
+      <span>Historique</span>
+    </a>
+    <a routerLink="/client/profile" routerLinkActive="text-[#F5C518] font-bold" class="flex flex-col items-center gap-1 text-gray-400 text-[11px] font-semibold">
+      <i class="fa-regular fa-user text-lg"></i>
+      <span>Profil</span>
+    </a>
+  </nav>
 
-  </div>
 </div>

@@ -6,42 +6,9 @@
       <app-logo></app-logo>
     </div>
 
-    <!-- Role Switcher (matching interface.png style) -->
-    <div class="flex justify-center mb-8">
-      <div class="bg-gray-100 p-1.5 rounded-full inline-flex gap-1 shadow-inner border border-gray-200">
-        <button 
-          type="button"
-          (click)="selectRole('CUSTOMER')" 
-          [class.bg-[#F5C518]]="selectedRole === 'CUSTOMER'"
-          [class.text-[#1A1A1A]]="selectedRole === 'CUSTOMER'"
-          [class.font-bold]="selectedRole === 'CUSTOMER'"
-          class="px-5 py-2 rounded-full text-xs transition-all duration-200 text-gray-500 hover:text-gray-900">
-          Client
-        </button>
-        <button 
-          type="button"
-          (click)="selectRole('DRIVER')" 
-          [class.bg-[#F5C518]]="selectedRole === 'DRIVER'"
-          [class.text-[#1A1A1A]]="selectedRole === 'DRIVER'"
-          [class.font-bold]="selectedRole === 'DRIVER'"
-          class="px-5 py-2 rounded-full text-xs transition-all duration-200 text-gray-500 hover:text-gray-900">
-          Chauffeur
-        </button>
-        <button 
-          type="button"
-          (click)="selectRole('ADMIN')" 
-          [class.bg-[#F5C518]]="selectedRole === 'ADMIN'"
-          [class.text-[#1A1A1A]]="selectedRole === 'ADMIN'"
-          [class.font-bold]="selectedRole === 'ADMIN'"
-          class="px-5 py-2 rounded-full text-xs transition-all duration-200 text-gray-500 hover:text-gray-900">
-          Admin
-        </button>
-      </div>
-    </div>
-
     <div class="text-center mb-6">
-      <h1 class="text-2xl font-black text-gray-900 tracking-tight">Bienvenue</h1>
-      <p class="text-xs text-gray-500 mt-1">Connectez-vous pour continuer</p>
+      <h1 class="text-2xl font-black text-gray-900 tracking-tight">Bienvenue sur MotoTaxi</h1>
+      <p class="text-xs text-gray-500 mt-1">Connectez-vous à votre espace personnel</p>
     </div>
 
     <!-- Error message -->
@@ -78,14 +45,39 @@
       <button 
         type="submit" 
         [disabled]="isLoading || loginForm.invalid"
-        class="w-full bg-[#F5C518] hover:bg-[#E5B50A] text-[#1A1A1A] font-bold py-3.5 px-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-6 disabled:opacity-50">
+        class="w-full bg-[#F5C518] hover:bg-[#E5B50A] text-[#1A1A1A] font-bold py-3.5 px-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-6 disabled:opacity-50 cursor-pointer">
         <i *ngIf="isLoading" class="fa-solid fa-circle-notch fa-spin"></i>
         <span>{{ isLoading ? 'Connexion en cours...' : 'Se connecter' }}</span>
         <i *ngIf="!isLoading" class="fa-solid fa-arrow-right text-xs"></i>
       </button>
     </form>
 
-    <div class="mt-8 text-center text-xs text-gray-500">
+    <!-- Quick test account autofill -->
+    <div class="mt-6 pt-5 border-t border-gray-100">
+      <p class="text-[11px] text-gray-400 font-semibold text-center mb-2">Comptes de test (cliquez pour remplir) :</p>
+      <div class="grid grid-cols-3 gap-2">
+        <button 
+          type="button" 
+          (click)="autofill('client')"
+          class="p-2 rounded-xl bg-gray-50 hover:bg-yellow-50 hover:border-[#F5C518] border border-gray-200 text-[11px] font-bold text-gray-700 transition text-center">
+          👤 Client
+        </button>
+        <button 
+          type="button" 
+          (click)="autofill('driver')"
+          class="p-2 rounded-xl bg-gray-50 hover:bg-yellow-50 hover:border-[#F5C518] border border-gray-200 text-[11px] font-bold text-gray-700 transition text-center">
+          🛵 Chauffeur
+        </button>
+        <button 
+          type="button" 
+          (click)="autofill('admin')"
+          class="p-2 rounded-xl bg-gray-50 hover:bg-yellow-50 hover:border-[#F5C518] border border-gray-200 text-[11px] font-bold text-gray-700 transition text-center">
+          🛡️ Admin
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-6 text-center text-xs text-gray-500">
       Pas encore de compte ? 
       <a routerLink="/auth/register" class="text-gray-900 font-bold hover:underline ml-1">Créer un compte</a>
     </div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="dark_bg">#1A1A1A</color>
+    <color name="dark_surface">#262626</color>
+    <color name="gray_text">#666666</color>
+    <color name="green_success">#10B981</color>
+    <color name="light_bg">#F4F5F7</color>
+    <color name="primary_yellow">#F5C518</color>
+    <color name="primary_yellow_dark">#E5B50A</color>
+    <color name="red_danger">#EF4444</color>
+    <color name="white">#FFFFFF</color>
+    <string name="app_name">MotoTaxi</string>
+    <string name="title_admin">Admin</string>
+    <string name="title_client">Client</string>
+    <string name="title_driver">Chauffeur</string>
+    <style name="Theme.MotoTaxi" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_yellow</item>
+        <item name="colorPrimaryVariant">@color/primary_yellow_dark</item>
+        <item name="colorOnPrimary">@color/dark_bg</item>
+        <item name="android:statusBarColor">@color/dark_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

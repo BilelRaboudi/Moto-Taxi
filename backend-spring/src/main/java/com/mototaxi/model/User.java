@@ -1,5 +1,7 @@
 package com.mototaxi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id
@@ -30,6 +33,7 @@ public class User {
     @Column(length = 20)
     private String phone;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String passwordHash;
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_yellow">#F5C518</color>
+    <color name="primary_yellow_dark">#E5B50A</color>
+    <color name="dark_bg">#1A1A1A</color>
+    <color name="dark_surface">#262626</color>
+    <color name="light_bg">#F4F5F7</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray_text">#666666</color>
+    <color name="black">#000000</color>
+    <color name="green_success">#10B981</color>
+    <color name="red_danger">#EF4444</color>
+</resources>

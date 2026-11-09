@@ -5,6 +5,7 @@ com\mototaxi\dto\RideResponse$RideResponseBuilder.class
 com\mototaxi\model\Rating$RatingBuilder.class
 com\mototaxi\model\Payment$PaymentBuilder.class
 com\mototaxi\model\Tariff$TariffBuilder.class
+com\mototaxi\config\RealtimeWebSocketHandler.class
 com\mototaxi\dto\PriceEstimateResponse$PriceEstimateResponseBuilder.class
 com\mototaxi\dto\PagedResponse$PagedResponseBuilder.class
 com\mototaxi\dto\AuthResponse$AuthResponseBuilder.class

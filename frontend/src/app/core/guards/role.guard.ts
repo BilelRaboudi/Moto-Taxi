@@ -6,12 +6,26 @@ import { Role } from '../models/user.model';
 export const roleGuard = (allowedRoles: Role[]): CanActivateFn => {
   return () => {
     const authService = inject(AuthService);
-    // Allow seamless access to all 3 role interfaces
-    if (authService.isLoggedIn()) {
+    const router = inject(Router);
+
+    if (!authService.isLoggedIn()) {
+      router.navigate(['/auth/login']);
+      return false;
+    }
+
+    const userRole = authService.currentUser()?.role;
+    if (userRole && allowedRoles.includes(userRole)) {
       return true;
     }
-    const router = inject(Router);
-    router.navigate(['/auth/login']);
+
+    // Role non autorise -> redirection vers l'espace legitime de l'utilisateur
+    if (userRole === 'ADMIN') {
+      router.navigate(['/admin/dashboard']);
+    } else if (userRole === 'DRIVER') {
+      router.navigate(['/driver/dashboard']);
+    } else {
+      router.navigate(['/client/home']);
+    }
     return false;
   };
 };

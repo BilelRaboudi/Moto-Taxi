@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "com.mototaxi.app-debug-32:/drawable_progress_yellow.xml.flat",
+        "source": "com.mototaxi.app-main-34:/drawable/progress_yellow.xml"
+    },
+    {
+        "merged": "com.mototaxi.app-debug-32:/drawable_circle_yellow.xml.flat",
+        "source": "com.mototaxi.app-main-34:/drawable/circle_yellow.xml"
+    },
+    {
+        "merged": "com.mototaxi.app-debug-32:/drawable_ic_launcher.xml.flat",
+        "source": "com.mototaxi.app-main-34:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.mototaxi.app-debug-32:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.mototaxi.app-main-34:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.mototaxi.app-debug-32:/layout_activity_main.xml.flat",
+        "source": "com.mototaxi.app-main-34:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.mototaxi.app-debug-32:/drawable_pill_dark.xml.flat",
+        "source": "com.mototaxi.app-main-34:/drawable/pill_dark.xml"
+    },
+    {
+        "merged": "com.mototaxi.app-debug-32:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.mototaxi.app-main-34:/mipmap-anydpi-v26/ic_launcher.xml"
+    }
+]

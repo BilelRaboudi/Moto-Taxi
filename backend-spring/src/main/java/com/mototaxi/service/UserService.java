@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -44,6 +46,10 @@ public class UserService {
                 .totalPages(page.getTotalPages())
                 .currentPage(page.getNumber())
                 .build();
+    }
+
+    public List<User> getAllUsersList() {
+        return userRepository.findAll();
     }
 
     @Transactional

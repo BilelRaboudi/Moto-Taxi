@@ -13,25 +13,8 @@ import { AuthService } from '../../../core/services/auth.service';
 export class DriverShellComponent {
   constructor(public authService: AuthService, private router: Router) {}
 
-  switchRole(role: string) {
-    if (role === 'client') {
-      const u = this.authService.currentUser();
-      if (u) {
-        u.role = 'CUSTOMER';
-        localStorage.setItem('mototaxi_user', JSON.stringify(u));
-        this.authService.currentUser.set(u);
-      }
-      this.router.navigate(['/client/home']);
-    } else if (role === 'driver') {
-      this.router.navigate(['/driver/dashboard']);
-    } else if (role === 'admin') {
-      const u = this.authService.currentUser();
-      if (u) {
-        u.role = 'ADMIN';
-        localStorage.setItem('mototaxi_user', JSON.stringify(u));
-        this.authService.currentUser.set(u);
-      }
-      this.router.navigate(['/admin/dashboard']);
-    }
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/auth/login']);
   }
 }

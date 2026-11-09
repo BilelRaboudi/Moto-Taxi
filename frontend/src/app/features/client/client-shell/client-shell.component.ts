@@ -14,25 +14,8 @@ import { LogoComponent } from '../../../shared/components/logo/logo.component';
 export class ClientShellComponent {
   constructor(public authService: AuthService, private router: Router) {}
 
-  switchRole(role: string) {
-    if (role === 'client') {
-      this.router.navigate(['/client/home']);
-    } else if (role === 'driver') {
-      const u = this.authService.currentUser();
-      if (u) {
-        u.role = 'DRIVER';
-        localStorage.setItem('mototaxi_user', JSON.stringify(u));
-        this.authService.currentUser.set(u);
-      }
-      this.router.navigate(['/driver/dashboard']);
-    } else if (role === 'admin') {
-      const u = this.authService.currentUser();
-      if (u) {
-        u.role = 'ADMIN';
-        localStorage.setItem('mototaxi_user', JSON.stringify(u));
-        this.authService.currentUser.set(u);
-      }
-      this.router.navigate(['/admin/dashboard']);
-    }
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/auth/login']);
   }
 }

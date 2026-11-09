@@ -1,5 +1,6 @@
 package com.mototaxi.service;
 
+import com.mototaxi.config.RealtimeWebSocketHandler;
 import com.mototaxi.dto.PagedResponse;
 import com.mototaxi.dto.PriceEstimateRequest;
 import com.mototaxi.dto.PriceEstimateResponse;
@@ -32,6 +33,7 @@ public class RideService {
     private final UserRepository userRepository;
     private final DriverRepository driverRepository;
     private final TariffService tariffService;
+    private final RealtimeWebSocketHandler realtimeWebSocketHandler;
 
     public PriceEstimateResponse estimatePrice(PriceEstimateRequest request) {
         double distanceKm = calculateDistance(
@@ -79,7 +81,12 @@ public class RideService {
                 .build();
 
         ride = rideRepository.save(ride);
-        return mapToRideResponse(ride);
+        RideResponse response = mapToRideResponse(ride);
+
+        // Diffuser instantanement la nouvelle demande aux chauffeurs en ligne
+        realtimeWebSocketHandler.broadcastNewRideRequest(response);
+
+        return response;
     }
 
     @Transactional
@@ -98,7 +105,11 @@ public class RideService {
         ride.setStatus(Ride.RideStatus.ACCEPTED);
         ride = rideRepository.save(ride);
 
-        return mapToRideResponse(ride);
+        RideResponse response = mapToRideResponse(ride);
+        realtimeWebSocketHandler.broadcastToRide(String.valueOf(rideId), "ride:accepted", response);
+        realtimeWebSocketHandler.broadcastToUser(String.valueOf(ride.getCustomer().getId()), "ride:driverAccepted", response);
+
+        return response;
     }
 
     @Transactional
@@ -112,7 +123,10 @@ public class RideService {
 
         ride.setStatus(Ride.RideStatus.IN_PROGRESS);
         ride = rideRepository.save(ride);
-        return mapToRideResponse(ride);
+
+        RideResponse response = mapToRideResponse(ride);
+        realtimeWebSocketHandler.broadcastToRide(String.valueOf(rideId), "ride:inProgress", response);
+        return response;
     }
 
     @Transactional
@@ -135,7 +149,10 @@ public class RideService {
         }
 
         ride = rideRepository.save(ride);
-        return mapToRideResponse(ride);
+
+        RideResponse response = mapToRideResponse(ride);
+        realtimeWebSocketHandler.broadcastToRide(String.valueOf(rideId), "ride:done", response);
+        return response;
     }
 
     @Transactional
@@ -149,7 +166,10 @@ public class RideService {
 
         ride.setStatus(Ride.RideStatus.CANCELLED);
         ride = rideRepository.save(ride);
-        return mapToRideResponse(ride);
+
+        RideResponse response = mapToRideResponse(ride);
+        realtimeWebSocketHandler.broadcastToRide(String.valueOf(rideId), "ride:cancelled", response);
+        return response;
     }
 
     public List<RideResponse> getRidesByCustomer(Long customerId) {

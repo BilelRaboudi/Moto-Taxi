@@ -1,68 +1,86 @@
-<div class="min-h-screen bg-[#F4F5F7] flex justify-center py-0 md:py-6">
-  <!-- Mobile Container matching middle panel of interface.png -->
-  <div class="w-full max-w-[420px] bg-[#F8F9FA] md:rounded-[40px] shadow-2xl overflow-hidden flex flex-col h-[100vh] md:h-[880px] border border-gray-200 relative">
+<div class="min-h-screen bg-[#F4F5F7] flex flex-col">
 
-    <!-- Top Black Header Container -->
-    <header class="bg-[#1A1A1A] text-white px-5 pt-5 pb-5 rounded-b-[32px] shadow-lg">
-      <!-- Role Switcher (matching interface.png) -->
-      <div class="flex justify-center mb-5">
-        <div class="bg-[#2A2A2A] p-1 rounded-full inline-flex gap-1 border border-white/10">
-          <button (click)="switchRole('client')" class="text-gray-400 font-medium px-4 py-1.5 rounded-full text-xs hover:text-white transition">
-            Client
-          </button>
-          <button class="bg-[#F5C518] text-[#1A1A1A] font-extrabold px-5 py-1.5 rounded-full text-xs shadow-sm">
-            Chauffeur
-          </button>
-          <button (click)="switchRole('admin')" class="text-gray-400 font-medium px-4 py-1.5 rounded-full text-xs hover:text-white transition">
-            Admin
-          </button>
+  <!-- Responsive Top Header (Dark Brand Theme) -->
+  <header class="bg-[#1A1A1A] text-white px-4 sm:px-8 py-4 shadow-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- Brand & Profile info -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-[#F5C518] flex items-center justify-center text-[#1A1A1A] text-lg font-bold shadow-md">
+          <i class="fa-solid fa-motorcycle"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-sm sm:text-base font-black text-white leading-tight">
+              {{ authService.currentUser()?.fullName || 'Amine Jlassi' }}
+            </h2>
+            <span class="bg-[#F5C518] text-[#1A1A1A] text-[10px] font-black uppercase px-2 py-0.5 rounded-md">
+              Chauffeur Partenaire
+            </span>
+          </div>
+          <p class="text-[11px] text-gray-400 font-medium">Moto #178 TU 3144 • Grand Tunis</p>
         </div>
       </div>
 
-      <!-- Driver Greeting & Online Switch -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-full bg-[#F5C518] flex items-center justify-center text-[#1A1A1A] text-xl shadow-md">
-            <i class="fa-solid fa-user"></i>
-          </div>
-          <div>
-            <h2 class="text-base font-extrabold text-white leading-tight">Bonjour, Amine</h2>
-            <p class="text-xs text-gray-400 font-medium">Chauffeur Pro</p>
-          </div>
-        </div>
-
-        <!-- Availability Toggle -->
-        <div class="flex items-center gap-2 bg-[#262626] px-3 py-1.5 rounded-full border border-white/10">
-          <span class="text-[11px] font-bold text-gray-300">En ligne</span>
+      <!-- Right: Availability status, Desktop navigation & Logout -->
+      <div class="flex items-center gap-3 sm:gap-6">
+        <!-- Status Toggle -->
+        <div class="flex items-center gap-2 bg-[#262626] px-3.5 py-1.5 rounded-full border border-white/10">
           <div class="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse"></div>
+          <span class="text-xs font-bold text-gray-200">En service</span>
         </div>
+
+        <!-- Desktop Links -->
+        <nav class="hidden md:flex items-center gap-1 text-xs font-bold text-gray-400">
+          <a routerLink="/driver/dashboard" routerLinkActive="bg-white/10 text-[#F5C518]" [routerLinkActiveOptions]="{exact: true}" class="px-3.5 py-2 rounded-xl hover:text-white transition">
+            Tableau de bord
+          </a>
+          <a routerLink="/driver/requests" routerLinkActive="bg-white/10 text-[#F5C518]" class="px-3.5 py-2 rounded-xl hover:text-white transition">
+            Demandes
+          </a>
+          <a routerLink="/driver/earnings" routerLinkActive="bg-white/10 text-[#F5C518]" class="px-3.5 py-2 rounded-xl hover:text-white transition">
+            Mes Gains
+          </a>
+          <a routerLink="/driver/history" routerLinkActive="bg-white/10 text-[#F5C518]" class="px-3.5 py-2 rounded-xl hover:text-white transition">
+            Historique
+          </a>
+        </nav>
+
+        <button 
+          (click)="logout()" 
+          title="Se déconnecter"
+          class="text-xs font-bold text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span class="hidden sm:inline">Quitter</span>
+        </button>
       </div>
-    </header>
 
-    <!-- Main Content Area with router-outlet -->
-    <main class="flex-1 overflow-y-auto px-5 py-4">
-      <router-outlet></router-outlet>
-    </main>
+    </div>
+  </header>
 
-    <!-- Bottom Navigation Bar for Driver -->
-    <nav class="bg-white border-t border-gray-100 px-6 py-3 flex justify-between items-center z-20">
-      <a routerLink="/driver/dashboard" routerLinkActive="text-[#F5C518]" [routerLinkActiveOptions]="{exact: true}" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-700 text-xs font-semibold">
-        <i class="fa-solid fa-gauge-high text-lg"></i>
-        <span>Dashboard</span>
-      </a>
-      <a routerLink="/driver/requests" routerLinkActive="text-[#F5C518]" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-700 text-xs font-semibold">
-        <i class="fa-solid fa-bell text-lg"></i>
-        <span>Demandes</span>
-      </a>
-      <a routerLink="/driver/earnings" routerLinkActive="text-[#F5C518]" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-700 text-xs font-semibold">
-        <i class="fa-solid fa-coins text-lg"></i>
-        <span>Gains</span>
-      </a>
-      <a routerLink="/driver/history" routerLinkActive="text-[#F5C518]" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-700 text-xs font-semibold">
-        <i class="fa-regular fa-clock text-lg"></i>
-        <span>Courses</span>
-      </a>
-    </nav>
+  <!-- Main Content Area: Responsive container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 pb-20 md:pb-6">
+    <router-outlet></router-outlet>
+  </main>
 
-  </div>
+  <!-- Bottom Navigation Bar (Visible ONLY on Mobile < md) -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-2.5 flex justify-between items-center z-40 shadow-lg">
+    <a routerLink="/driver/dashboard" routerLinkActive="text-[#F5C518] font-bold" [routerLinkActiveOptions]="{exact: true}" class="flex flex-col items-center gap-1 text-gray-400 text-[11px] font-semibold">
+      <i class="fa-solid fa-gauge-high text-lg"></i>
+      <span>Dashboard</span>
+    </a>
+    <a routerLink="/driver/requests" routerLinkActive="text-[#F5C518] font-bold" class="flex flex-col items-center gap-1 text-gray-400 text-[11px] font-semibold">
+      <i class="fa-solid fa-bell text-lg"></i>
+      <span>Demandes</span>
+    </a>
+    <a routerLink="/driver/earnings" routerLinkActive="text-[#F5C518] font-bold" class="flex flex-col items-center gap-1 text-gray-400 text-[11px] font-semibold">
+      <i class="fa-solid fa-coins text-lg"></i>
+      <span>Gains</span>
+    </a>
+    <a routerLink="/driver/history" routerLinkActive="text-[#F5C518] font-bold" class="flex flex-col items-center gap-1 text-gray-400 text-[11px] font-semibold">
+      <i class="fa-regular fa-clock text-lg"></i>
+      <span>Courses</span>
+    </a>
+  </nav>
+
 </div>

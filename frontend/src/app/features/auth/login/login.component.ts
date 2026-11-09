@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { Role } from '../../../core/models/user.model';
 import { LogoComponent } from '../../../shared/components/logo/logo.component';
 
 @Component({
@@ -15,7 +14,6 @@ import { LogoComponent } from '../../../shared/components/logo/logo.component';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  selectedRole: Role = 'CUSTOMER';
   isLoading = false;
   errorMessage = '';
 
@@ -25,18 +23,18 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['client@mototaxi.tn', [Validators.required, Validators.email]],
-      password: ['Client@123', [Validators.required]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
     });
   }
 
-  selectRole(role: Role) {
-    this.selectedRole = role;
-    if (role === 'CUSTOMER') {
+  /** Pre-fill credentials for quick demo testing */
+  autofill(role: string) {
+    if (role === 'client') {
       this.loginForm.patchValue({ email: 'client@mototaxi.tn', password: 'Client@123' });
-    } else if (role === 'DRIVER') {
+    } else if (role === 'driver') {
       this.loginForm.patchValue({ email: 'driver@mototaxi.tn', password: 'Driver@123' });
-    } else if (role === 'ADMIN') {
+    } else if (role === 'admin') {
       this.loginForm.patchValue({ email: 'admin@mototaxi.tn', password: 'Admin@123' });
     }
   }
@@ -50,6 +48,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
         this.isLoading = false;
+        // Redirect based on the role returned by the server
         if (res.role === 'CUSTOMER') {
           this.router.navigate(['/client']);
         } else if (res.role === 'DRIVER') {
